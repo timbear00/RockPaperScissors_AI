@@ -39,7 +39,7 @@ def RSP(user_input) :
         values[previous_input][user_input] += 1
 
     previous_input = user_input
-    res = judge(user_input, com)
+    res = judge(user_input, com)        # 승패 판단
 
     if (user_win+com_win)==0 :
         win_rate = 0
@@ -135,6 +135,7 @@ photo_scissors = PhotoImage(file='scissors.png')
 btn_scissors = Button(root, image = photo_scissors, width=150, height=150, command=scissors)     # 가위
 btn_scissors.place(x=640, y=380, anchor='center')
 
+# Values 행렬 나타내는 Label
 matrix11 = Label(text='0', font=('Arial', 15))
 matrix11.place(x=600, y=160, anchor='center')
 matrix12 = Label(text='0', font=('Arial', 15))
