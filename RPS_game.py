@@ -10,19 +10,20 @@ from tkinter.font import families
 import pandas as pd
 import random
 
-values = [
-    [0,0,0],    # 가위 0
-    [0,0,0],    # 바위 1
-    [0,0,0]     # 보   2
+# value: 3*3의 2차원 마르코프 행렬, index값 0은 가위, 1은 바위, 2는 보
+values = [ 
+    [0,0,0],
+    [0,0,0],
+    [0,0,0]
 ]
 
 player_input = 1
 previous_input = 0
 
-user_win = 0
-com_win = 0
-win_rate = 0
-count=0
+user_win = 0 # 사용자가 이긴 판 수
+com_win = 0 # 컴퓨터가 이긴 판 수
+win_rate = 0 # 컴퓨터의 승률
+count = 0 # 진행된 판 수
 
 index = ['가위', '바위', '보']
 
@@ -33,7 +34,7 @@ def RSP(user_input) :
     global previous_input
 
     if count==0 :
-        com = random.randrange(0, 3)
+        com = random.randrange(0, 3) # 첫 판이면 컴퓨터는 랜덤으로 냄
     else :
         com = com_decision(values, previous_input)
         values[previous_input][user_input] += 1
@@ -77,15 +78,18 @@ def judge(player, com) :
     global count 
     global user_win
     global com_win
-
+    
+    win_num = (com + 1) % 3 # 사용자가 컴퓨터를 이기는 값
+    
     count += 1
-    if(player==com) :
+    
+    if(player == com) :
         return '비김'
-    elif( (player==0 and com==2) or ( player==1 and com==0 ) or (player==2 and com==1) ) :
+    elif(player == win_num) :
         user_win += 1
         return '승리'
     else :
-        com_win+= 1
+        com_win += 1
         return '패배'
 
 def rock() :
