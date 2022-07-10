@@ -93,7 +93,7 @@ def RSP(user_input) :
 def com_decision(rsp_matrix, res_matrix, previous_input, previous_result) :
     denom = sum(res_matrix[previous_result]) + 1
     temp = [1 + i/denom for i in res_matrix[previous_result]]
-    possibilities = [n * temp[judge(previous_input,i)] for n, i in enumerate(rsp_matrix[previous_input])]
+    possibilities = [n * temp[judge(previous_input,i)] for i, n in enumerate(rsp_matrix[previous_input])]
     return (possibilities.index(max(possibilities)) + 1) % 3
 
 
