@@ -56,14 +56,14 @@ def RSP(user_input) :
         res_matrix[previous_result][judge(user_input, previous_input)] += 1
 
     previous_input = user_input
-    
+
     previous_result = judge(user_input, com) # 승패 판단
 
     if (previous_result == 0):
         user_win += 1
     elif (previous_result == 1):
         com_win += 1
-    
+
     count += 1
 
     if (user_win + com_win) == 0 :
@@ -109,11 +109,6 @@ def judge(a, b) :
         return 0 # 승리
     else :
         return 1 # 패배
-
-
-
-def reverse_judge(result, a) :
-    k = 1
 
 
 
@@ -186,6 +181,7 @@ matrix32 = Label(text='0', font=('Arial', 15))
 matrix32.place(x=650, y=240, anchor='center')
 matrix33 = Label(text='0', font=('Arial', 15))
 matrix33.place(x=700, y=240, anchor='center')
+
 
 
 root.mainloop()
