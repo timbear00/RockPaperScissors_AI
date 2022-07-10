@@ -91,7 +91,9 @@ def RSP(user_input) :
 
 # 마르코프 행렬과 유저의 이전 판단값을 매개변수로 받아서, 컴퓨터의 다음 판단값을 반환
 def com_decision(rsp_matrix, res_matrix, previous_input, previous_result) :
-    possibilities = [i * (j := res_matrix[previous_result][judge(previous_input,i)]) if j != 0 else 1 for i in rsp_matrix[previous_input]]
+    denom = sum(res_matrix[previous_result])
+    temp = [1 + i/denom for i in res_matrix[previous_result]]
+    possibilities = [n * temp[judge(previous_input,i)] for n, i in enumerate(rsp_matrix[previous_input])]
     return (possibilities.index(max(possibilities)) + 1) % 3
 
 
