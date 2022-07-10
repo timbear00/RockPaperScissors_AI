@@ -2,6 +2,7 @@
 python Rock Paper Scissors Game (GUI)
 이전 판단값과 이전 승패의 데이터로 사용자의 현재 판단값을 예측하는 가위바위보 알고리즘
 '''
+
 from cProfile import label
 from cgitb import text
 from msilib.schema import Font
@@ -11,15 +12,15 @@ from tkinter.font import families
 #import pandas as pd
 import random
 
-# PN_matrix: 3*3의 2차원 마르코프 행렬, index값 0은 가위, 1은 바위, 2는 보, 행은 이전 판단값, 열은 현재 판단값
-PN_matrix = [ 
+# rsp_matrix: 3*3의 2차원 마르코프 행렬, index값 0은 가위, 1은 바위, 2는 보, 행은 이전 판단값, 열은 현재 판단값
+rsp_matrix = [ 
     [0,0,0],
     [0,0,0],
     [0,0,0]
 ]
 
-# WL_matrix: 3*3의 2차원 마르코프 행렬, index값 0은 승리, 1은 패배, 2는 무승부, 행은 이전 승패, 열은 현재 승패
-WL_matrix = [ 
+# res_matrix: 3*3의 2차원 마르코프 행렬, index값 0은 승리, 1은 패배, 2는 무승부, 행은 이전 승패, 열은 유저가 이전에 낸 것에 대해 유저가 현재 낸 것이 가지는 승패 결과
+res_matrix = [ 
     [0,0,0],
     [0,0,0],
     [0,0,0]
@@ -27,78 +28,96 @@ WL_matrix = [
 
 
 
-player_input = 1 # 유저 현재 입력값
 previous_input = 0 # 유저 이전 입력값
+
+previous_result = '승리' # 이전 승패
+rel_value = 0 # 유저가 이전에 낸 것에 대해 유저가 현재 낸 것이 가지는 승패 결과
 
 user_win = 0 # 사용자가 이긴 판 수
 com_win = 0 # 컴퓨터가 이긴 판 수
 win_rate = 0 # 컴퓨터의 승률
 count = 0 # 진행된 판 수
 
-index = ['가위', '바위', '보'] # GUI 구현 시 판단값을 문자열로 변환할 때에만 사용
+rsp_index = ['가위', '바위', '보'] # GUI 구현 시 판단값을 문자열로 변환할 때에만 사용
+res_index = ['승리', '패배', '무승부'] # GUI 구현 시 승패값을 문자열로 변환할 때에만 사용
 
 def RSP(user_input) :
     global user_win
     global com_win
     global count
     global previous_input
+    global previous_result
 
     if count==0 :
         com = random.randrange(0, 3) # 첫 판이면 컴퓨터는 랜덤으로 냄
     else :
-        com = com_decision(PN_matrix, previous_input)
-        PN_matrix[previous_input][user_input] += 1
+        com = com_decision(rsp_matrix, res_matrix, previous_input, previous_result)
+        rsp_matrix[previous_input][user_input] += 1
+        res_matrix[previous_result][judge(user_input, previous_input)] += 1
 
     previous_input = user_input
-    res = judge(user_input, com) # 승패 판단
+    
+    previous_result = judge(user_input, com) # 승패 판단
 
-    if (user_win+com_win) == 0 :
+    if (previous_result == 0):
+        user_win += 1
+    elif (previous_result == 1):
+        com_win += 1
+    
+    count += 1
+
+    if (user_win + com_win) == 0 :
         win_rate = 0
     else :
         win_rate = round(com_win / (user_win+com_win) * 100, 2)
 
     label_winrate.config(text=f'Player Win : {user_win} / Computer Win : {com_win} / Win Rate : {win_rate}% ({count})')
-    label_select.config(text=f'Player : {index[user_input]}, Computer : {index[com]}')   
-    label_result.config(text=f'Result : {res}')
+    label_select.config(text=f'Player : {rsp_index[user_input]}, Computer : {rsp_index[com]}')
+    label_result.config(text=f'Result : {res_index[previous_result]}')
 
-    matrix11.config(text=str(PN_matrix[0][0]))
-    matrix12.config(text=str(PN_matrix[0][1]))
-    matrix13.config(text=str(PN_matrix[0][2]))
+    matrix11.config(text=str(rsp_matrix[0][0]))
+    matrix12.config(text=str(rsp_matrix[0][1]))
+    matrix13.config(text=str(rsp_matrix[0][2]))
 
-    matrix21.config(text=str(PN_matrix[1][0]))
-    matrix22.config(text=str(PN_matrix[1][1]))
-    matrix23.config(text=str(PN_matrix[1][2]))
+    matrix21.config(text=str(rsp_matrix[1][0]))
+    matrix22.config(text=str(rsp_matrix[1][1]))
+    matrix23.config(text=str(rsp_matrix[1][2]))
 
-    matrix31.config(text=str(PN_matrix[2][0]))
-    matrix32.config(text=str(PN_matrix[2][1]))
-    matrix33.config(text=str(PN_matrix[2][2]))
+    matrix31.config(text=str(rsp_matrix[2][0]))
+    matrix32.config(text=str(rsp_matrix[2][1]))
+    matrix33.config(text=str(rsp_matrix[2][2]))
 
 
 
 # 마르코프 행렬과 유저의 이전 판단값을 매개변수로 받아서, 컴퓨터의 다음 판단값을 반환
-def com_decision(data, pre_user) :
-    return (data[pre_user].index(max(data[pre_user])) + 1) % 3
+def com_decision(rsp_matrix, res_matrix, previous_input, previous_result) :
+    possibilities = [i * (j := res_matrix[previous_result][judge(previous_input,i)]) if j != 0 else 1 for i in possibilities]
+    return (possibilities.index(max(possibilities)) + 1) % 3
 
 
 
-#사용자와 컴퓨터의 판단값을 매개변수로 받아서 승패를 판정 후 반환
-def judge(player, com) :
-    global count 
-    global user_win
-    global com_win
+# a와 b, 두 판단값을 매개변수로 받아서 a의 승패를 판정 후 반환
+def judge(a, b) :
     
-    win_num = (com + 1) % 3 # 사용자가 컴퓨터를 이기는 값
+    win_num = (b + 1) % 3 # a가 b를 이기는 값
     
-    count += 1
-    
-    if(player == com) :
-        return '비김'
-    elif(player == win_num) :
-        user_win += 1
-        return '승리'
+    if(a == b) :
+        return 2 # 무승부
+    elif(a == win_num) :
+        return 0 # 승리
     else :
-        com_win += 1
-        return '패배'
+        return 1 # 패배
+
+
+
+def reverse_judge(result, a) :
+    k = 1
+
+
+
+def scissors() :
+    #label_select.config(text="Player : scissors")
+    RSP(0)
 
 def rock() :
     #label_select.config(text="Player : rock")
@@ -108,9 +127,6 @@ def paper() :
     #label_select.config(text="Player : paper")
     RSP(2)
 
-def scissors() :
-    #label_select.config(text="Player : scissors")
-    RSP(0)
 
 
 #Gui
@@ -147,7 +163,7 @@ photo_scissors = PhotoImage(file='scissors.png')
 btn_scissors = Button(root, image = photo_scissors, width=150, height=150, command=scissors)     # 가위
 btn_scissors.place(x=640, y=380, anchor='center')
 
-# PN_matrix 행렬 나타내는 Label
+# rsp_matrix 행렬 나타내는 Label
 matrix11 = Label(text='0', font=('Arial', 15))
 matrix11.place(x=600, y=160, anchor='center')
 matrix12 = Label(text='0', font=('Arial', 15))
