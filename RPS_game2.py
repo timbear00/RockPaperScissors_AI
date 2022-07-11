@@ -89,15 +89,12 @@ def judge(player, com) :
         return '패배'
 
 def rock() :
-    #label_select.config(text="Player : rock")
     RSP(1)
 
 def paper() :
-    #label_select.config(text="Player : paper")
     RSP(2)
 
 def scissors() :
-    #label_select.config(text="Player : scissors")
     RSP(0)
 
 

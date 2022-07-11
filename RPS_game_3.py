@@ -27,7 +27,6 @@ res_matrix = [
 ]
 
 
-
 previous_input = 0 # 유저 이전 입력값
 
 previous_result = '승리' # 이전 승패
@@ -54,6 +53,8 @@ def RSP(user_input) :
         com = com_decision(rsp_matrix, res_matrix, previous_input, previous_result)
         rsp_matrix[previous_input][user_input] += 1
         res_matrix[previous_result][judge(user_input, previous_input)] += 1
+        label_values[0][previous_input][user_input].config(text=str(rsp_matrix[previous_input][user_input]))
+        label_values[1][previous_result][judge(user_input, previous_input)].config(text=str(res_matrix[previous_result][judge(user_input, previous_input)]))
 
     previous_input = user_input
 
@@ -74,19 +75,6 @@ def RSP(user_input) :
     label_winrate.config(text=f'Player Win : {user_win} / Computer Win : {com_win} / Win Rate : {win_rate}% ({count})')
     label_select.config(text=f'Player : {rsp_index[user_input]}, Computer : {rsp_index[com]}')
     label_result.config(text=f'Result : {res_index[previous_result]}')
-
-    matrix11.config(text=str(rsp_matrix[0][0]))
-    matrix12.config(text=str(rsp_matrix[0][1]))
-    matrix13.config(text=str(rsp_matrix[0][2]))
-
-    matrix21.config(text=str(rsp_matrix[1][0]))
-    matrix22.config(text=str(rsp_matrix[1][1]))
-    matrix23.config(text=str(rsp_matrix[1][2]))
-
-    matrix31.config(text=str(rsp_matrix[2][0]))
-    matrix32.config(text=str(rsp_matrix[2][1]))
-    matrix33.config(text=str(rsp_matrix[2][2]))
-
 
 
 # 마르코프 행렬과 유저의 이전 판단값을 매개변수로 받아서, 컴퓨터의 다음 판단값을 반환
@@ -113,15 +101,12 @@ def judge(a, b) :
 
 
 def scissors() :
-    #label_select.config(text="Player : scissors")
     RSP(0)
 
 def rock() :
-    #label_select.config(text="Player : rock")
     RSP(1)
 
 def paper() :
-    #label_select.config(text="Player : paper")
     RSP(2)
 
 
@@ -160,28 +145,17 @@ photo_scissors = PhotoImage(file='scissors.png')
 btn_scissors = Button(root, image = photo_scissors, width=150, height=150, command=scissors)     # 가위
 btn_scissors.place(x=640, y=380, anchor='center')
 
-# rsp_matrix 행렬 나타내는 Label
-matrix11 = Label(text='0', font=('Arial', 15))
-matrix11.place(x=600, y=160, anchor='center')
-matrix12 = Label(text='0', font=('Arial', 15))
-matrix12.place(x=650, y=160, anchor='center')
-matrix13 = Label(text='0', font=('Arial', 15))
-matrix13.place(x=700, y=160, anchor='center')
+# rsp_matrix, res_matrix 행렬 나타내는 Label
+label_rsp = Label(text='rsp_matrix', font=('Arial', 15)).place(x=600, y=150, anchor='center')
+label_res = Label(text='res_matrix', font=('Arial', 15)).place(x=720, y=150, anchor='center')
 
-matrix21 = Label(text='0', font=('Arial', 15))
-matrix21.place(x=600, y=200, anchor='center')
-matrix22 = Label(text='0', font=('Arial', 15))
-matrix22.place(x=650, y=200, anchor='center')
-matrix23 = Label(text='0', font=('Arial', 15))
-matrix23.place(x=700, y=200, anchor='center')
+label_values = [
+   [ [Label(text='0', font=('Arial', 15)) for a in range(0, 3)] for b in range(0, 3) ] for c in range(0, 2)
+]
 
-matrix31 = Label(text='0', font=('Arial', 15))
-matrix31.place(x=600, y=240, anchor='center')
-matrix32 = Label(text='0', font=('Arial', 15))
-matrix32.place(x=650, y=240, anchor='center')
-matrix33 = Label(text='0', font=('Arial', 15))
-matrix33.place(x=700, y=240, anchor='center')
-
-
+for i in range(0, 2) :
+    for j in range(0, 3) :
+        for k in range(0, 3) :
+            label_values[i][j][k].place(x=570+(k*30)+(i*120), y=180+(j*30), anchor='center')
 
 root.mainloop()
