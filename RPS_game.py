@@ -32,6 +32,7 @@ def RSP(user_input) :
     global com_win
     global count
     global previous_input
+    global win_rate
 
     if count==0 :
         com = random.randrange(0, 3) # 첫 판이면 컴퓨터는 랜덤으로 냄
@@ -47,21 +48,22 @@ def RSP(user_input) :
     else :
         win_rate = round(com_win / (user_win+com_win) * 100, 2)
 
-    label_winrate.config(text=f'Player Win : {user_win} / Computer Win : {com_win} / Win Rate : {win_rate}% ({count})')
-    label_select.config(text=f'Player : {index[user_input]}, Computer : {index[com]}')   
-    label_result.config(text=f'Result : {res}')
+    if __name__ == '__main__' : 
+        label_winrate.config(text=f'Player Win : {user_win} / Computer Win : {com_win} / Win Rate : {win_rate}% ({count})')
+        label_select.config(text=f'Player : {index[user_input]}, Computer : {index[com]}')   
+        label_result.config(text=f'Result : {res}')
 
-    matrix11.config(text=str(values[0][0]))
-    matrix12.config(text=str(values[0][1]))
-    matrix13.config(text=str(values[0][2]))
+        matrix11.config(text=str(values[0][0]))
+        matrix12.config(text=str(values[0][1]))
+        matrix13.config(text=str(values[0][2]))
 
-    matrix21.config(text=str(values[1][0]))
-    matrix22.config(text=str(values[1][1]))
-    matrix23.config(text=str(values[1][2]))
+        matrix21.config(text=str(values[1][0]))
+        matrix22.config(text=str(values[1][1]))
+        matrix23.config(text=str(values[1][2]))
 
-    matrix31.config(text=str(values[2][0]))
-    matrix32.config(text=str(values[2][1]))
-    matrix33.config(text=str(values[2][2]))
+        matrix31.config(text=str(values[2][0]))
+        matrix32.config(text=str(values[2][1]))
+        matrix33.config(text=str(values[2][2]))
 
 def com_decision(data, pre_user) :
     next = data[pre_user].index( max(data[pre_user]) )
@@ -93,16 +95,34 @@ def judge(player, com) :
         return '패배'
 
 def rock() :
-    #label_select.config(text="Player : rock")
     RSP(1)
 
 def paper() :
-    #label_select.config(text="Player : paper")
     RSP(2)
 
 def scissors() :
-    #label_select.config(text="Player : scissors")
     RSP(0)
+
+def get_test_result_and_reset() :
+    global user_win
+    global com_win
+    global count
+    global win_rate
+    test_result = [user_win, com_win, count, win_rate]
+    values = [ 
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]
+    ]
+
+    player_input = 1
+    previous_input = 0
+    user_win = 0 
+    com_win = 0 
+    win_rate = 0
+    count = 0
+
+    return test_result
 
 
 if __name__ == '__main__' :

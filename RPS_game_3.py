@@ -4,6 +4,7 @@ python Rock Paper Scissors Game (GUI)
 '''
 
 from cProfile import label
+from cgi import test
 from cgitb import text
 from msilib.schema import Font
 from tkinter import *
@@ -44,6 +45,7 @@ def RSP(user_input) :
     global user_win
     global com_win
     global count
+    global win_rate
     global previous_input
     global previous_result
 
@@ -53,8 +55,10 @@ def RSP(user_input) :
         com = com_decision(rsp_matrix, res_matrix, previous_input, previous_result)
         rsp_matrix[previous_input][user_input] += 1
         res_matrix[previous_result][judge(user_input, previous_input)] += 1
-        label_values[0][previous_input][user_input].config(text=str(rsp_matrix[previous_input][user_input]))
-        label_values[1][previous_result][judge(user_input, previous_input)].config(text=str(res_matrix[previous_result][judge(user_input, previous_input)]))
+
+        if __name__ == '__main__' :
+            label_values[0][previous_input][user_input].config(text=str(rsp_matrix[previous_input][user_input]))
+            label_values[1][previous_result][judge(user_input, previous_input)].config(text=str(res_matrix[previous_result][judge(user_input, previous_input)]))
 
     previous_input = user_input
 
@@ -72,9 +76,10 @@ def RSP(user_input) :
     else :
         win_rate = round(com_win / (user_win+com_win) * 100, 2)
 
-    label_winrate.config(text=f'Player Win : {user_win} / Computer Win : {com_win} / Win Rate : {win_rate}% ({count})')
-    label_select.config(text=f'Player : {rsp_index[user_input]}, Computer : {rsp_index[com]}')
-    label_result.config(text=f'Result : {res_index[previous_result]}')
+    if __name__ == '__main__' :
+        label_winrate.config(text=f'Player Win : {user_win} / Computer Win : {com_win} / Win Rate : {win_rate}% ({count})')
+        label_select.config(text=f'Player : {rsp_index[user_input]}, Computer : {rsp_index[com]}')
+        label_result.config(text=f'Result : {res_index[previous_result]}')
 
 
 # 마르코프 행렬과 유저의 이전 판단값을 매개변수로 받아서, 컴퓨터의 다음 판단값을 반환
@@ -108,6 +113,39 @@ def rock() :
 
 def paper() :
     RSP(2)
+
+def get_test_result_and_reset() :
+    global user_win
+    global com_win
+    global count
+    global win_rate
+    test_result = [user_win, com_win, count, win_rate]
+
+    rsp_matrix = [ 
+    [0,0,0],
+    [0,0,0],
+    [0,0,0]
+    ]
+
+    res_matrix = [ 
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]
+    ]
+
+    previous_input = 0 
+
+    previous_result = '승리' 
+    rel_value = 0 
+
+    user_win = 0 
+    com_win = 0 
+    win_rate = 0
+    count = 0
+
+    return test_result
+
+
 
 
 if __name__ == '__main__' :

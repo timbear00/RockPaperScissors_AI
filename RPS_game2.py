@@ -33,6 +33,7 @@ def RSP(user_input) :
     global user_win
     global com_win
     global count
+    global win_rate
     global pre1_input
     global pre2_input
 
@@ -49,11 +50,12 @@ def RSP(user_input) :
     else :
         win_rate = round(com_win / (user_win+com_win) * 100, 2)
 
-    label_winrate.config(text=f'Player Win : {user_win} / Computer Win : {com_win} / Win Rate : {win_rate}% ({count})')
-    label_select.config(text=f'Player : {index[user_input]}, Computer : {index[com]}')   
-    label_result.config(text=f'Result : {res}')
+    if __name__ == '__main__' :
+        label_winrate.config(text=f'Player Win : {user_win} / Computer Win : {com_win} / Win Rate : {win_rate}% ({count})')
+        label_select.config(text=f'Player : {index[user_input]}, Computer : {index[com]}')   
+        label_result.config(text=f'Result : {res}')
 
-    label_values[pre2_input][pre1_input][user_input].config(text=str(values[pre2_input][pre1_input][user_input]))
+        label_values[pre2_input][pre1_input][user_input].config(text=str(values[pre2_input][pre1_input][user_input]))
     
     pre2_input = pre1_input
     pre1_input = user_input
@@ -97,6 +99,28 @@ def paper() :
 def scissors() :
     RSP(0)
 
+def get_test_result_and_reset() :
+    global user_win
+    global com_win
+    global count
+    global win_rate
+    test_result = [user_win, com_win, count, win_rate]
+    
+    values = [ 
+    [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+    [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+    [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    ]
+
+    player_input = 1    
+    pre1_input = 0      
+    pre2_input = 0      
+    user_win = 0 
+    com_win = 0 
+    win_rate = 0 
+    count = 0 
+
+    return test_result
 
 
 if __name__ == '__main__' :
