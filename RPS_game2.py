@@ -27,7 +27,8 @@ com_win = 0 # 컴퓨터가 이긴 판 수
 win_rate = 0 # 컴퓨터의 승률
 count = 0 # 진행된 판 수
 
-index = ['가위', '바위', '보']
+rsp_index = ['가위', '바위', '보'] # GUI 구현 시 판단값을 문자열로 변환할 때에만 사용
+res_index = ['승리', '패배', '무승부'] # GUI 구현 시 승패값을 문자열로 변환할 때에만 사용
 
 def RSP(user_input) :
     global user_win
@@ -44,16 +45,21 @@ def RSP(user_input) :
         values[pre2_input][pre1_input][user_input] += 1
 
     res = judge(user_input, com)        # 승패 판단
+    if res==0 :
+        user_win += 1
+    elif res==1 :
+        com_win += 1
+    count += 1
 
-    if (user_win+com_win)==0 :
+    if (user_win+com_win)==0 :      # 승률 계산
         win_rate = 0
     else :
         win_rate = round(com_win / (user_win+com_win) * 100, 2)
 
     if __name__ == '__main__' :
         label_winrate.config(text=f'Player Win : {user_win} / Computer Win : {com_win} / Win Rate : {win_rate}% ({count})')
-        label_select.config(text=f'Player : {index[user_input]}, Computer : {index[com]}')   
-        label_result.config(text=f'Result : {res}')
+        label_select.config(text=f'Player : {rsp_index[user_input]}, Computer : {rsp_index[com]}')   
+        label_result.config(text=f'Result : {res_index[res]}')
 
         label_values[pre2_input][pre1_input][user_input].config(text=str(values[pre2_input][pre1_input][user_input]))
     
@@ -72,23 +78,15 @@ def com_decision(data, pre1_user, pre2_user) :
         return 0
     
 
-def judge(player, com) :
-    global count 
-    global user_win
-    global com_win
-    
+def judge(player, com) :   
     win_num = (com + 1) % 3 # 사용자가 컴퓨터를 이기는 값
     
-    count += 1
-    
     if(player == com) :
-        return '비김'
+        return 2 # 비김
     elif(player == win_num) :
-        user_win += 1
-        return '승리'
+        return 0 # 승리
     else :
-        com_win += 1
-        return '패배'
+        return 1 # 패배
 
 def rock() :
     RSP(1)
