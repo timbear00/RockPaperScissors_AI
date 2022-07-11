@@ -19,18 +19,19 @@ test_result1 = []
 test_result2 = []
 test_result3 = []
 
-# for i in range(0, 10) :
-#     for j in range(0, 50) :
-#         rps1.RSP(test_data[i][j])
-#     test_result1.append(rps1.get_test_result_and_reset())
-# print(test_result1)
+for i in range(0, 10) :
+    for j in range(0, 50) :
+        rps1.RSP(test_data[i][j])
+    test_result1.append(rps1.get_test_result_and_reset())
+print(test_result1)
+print()
 
-
-# for i in range(0, 10) :
-#     for j in range(0, 50) :
-#         rps2.RSP(test_data[i][j])
-#     test_result2.append(rps2.get_test_result_and_reset())
-# print(test_result2)
+for i in range(0, 10) :
+    for j in range(0, 50) :
+        rps2.RSP(test_data[i][j])
+    test_result2.append(rps2.get_test_result_and_reset())
+print(test_result2)
+print()
 
 for i in range(0, 10) :
     for j in range(0, 50) :
