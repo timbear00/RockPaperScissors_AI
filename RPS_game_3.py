@@ -110,52 +110,52 @@ def paper() :
     RSP(2)
 
 
+if __name__ == '__main__' :
+    #Gui
+    root = Tk()
+    root.title("Rock Paper Scissors Game")
+    root.geometry("800x500+400+200")
 
-#Gui
-root = Tk()
-root.title("Rock Paper Scissors Game")
-root.geometry("800x500+400+200")
+    # Title Text
+    label_title = Label(root, text = 'Rock Paper Scissors Game', width=50, height=1, font=('Arial', 35))
+    label_title.pack()
 
-# Title Text
-label_title = Label(root, text = 'Rock Paper Scissors Game', width=50, height=1, font=('Arial', 35))
-label_title.pack()
+    # label1
+    label_winrate = Label(root, text = 'Player win : 0 / Computer win : 0 / Win Rate : 0.00%', font=('Arial', 15))
+    label_winrate.pack(pady=20)
 
-# label1
-label_winrate = Label(root, text = 'Player win : 0 / Computer win : 0 / Win Rate : 0.00%', font=('Arial', 15))
-label_winrate.pack(pady=20)
+    # Label2
+    label_select = Label(root, text='Player : -, Computer : -', font=('Arial',15))
+    label_select.pack(pady=20)
 
-# Label2
-label_select = Label(root, text='Player : -, Computer : -', font=('Arial',15))
-label_select.pack(pady=20)
+    # Label3
+    label_result = Label(root, text='Result : --', font=('Arial', 30, 'bold'))
+    label_result.pack(pady=10)
 
-# Label3
-label_result = Label(root, text='Result : --', font=('Arial', 30, 'bold'))
-label_result.pack(pady=10)
+    # 가위바위보 버튼
+    photo_rock = PhotoImage(file='rock.png')
+    btn_rock = Button(root, image = photo_rock, width=150, height=150, command=rock)            # 바위
+    btn_rock.place(x=160, y=380, anchor='center')
 
-# 가위바위보 버튼
-photo_rock = PhotoImage(file='rock.png')
-btn_rock = Button(root, image = photo_rock, width=150, height=150, command=rock)            # 바위
-btn_rock.place(x=160, y=380, anchor='center')
+    photo_paper = PhotoImage(file='paper.png')
+    btn_paper = Button(root, image = photo_paper, width=150, height=150, command=paper)           # 보
+    btn_paper.place(x=400, y=380, anchor='center')
 
-photo_paper = PhotoImage(file='paper.png')
-btn_paper = Button(root, image = photo_paper, width=150, height=150, command=paper)           # 보
-btn_paper.place(x=400, y=380, anchor='center')
+    photo_scissors = PhotoImage(file='scissors.png')
+    btn_scissors = Button(root, image = photo_scissors, width=150, height=150, command=scissors)     # 가위
+    btn_scissors.place(x=640, y=380, anchor='center')
 
-photo_scissors = PhotoImage(file='scissors.png')
-btn_scissors = Button(root, image = photo_scissors, width=150, height=150, command=scissors)     # 가위
-btn_scissors.place(x=640, y=380, anchor='center')
+    # rsp_matrix, res_matrix 행렬 나타내는 Label
+    label_rsp = Label(text='rsp_matrix', font=('Arial', 15)).place(x=600, y=150, anchor='center')
+    label_res = Label(text='res_matrix', font=('Arial', 15)).place(x=720, y=150, anchor='center')
 
-# rsp_matrix, res_matrix 행렬 나타내는 Label
-label_rsp = Label(text='rsp_matrix', font=('Arial', 15)).place(x=600, y=150, anchor='center')
-label_res = Label(text='res_matrix', font=('Arial', 15)).place(x=720, y=150, anchor='center')
+    label_values = [
+    [ [Label(text='0', font=('Arial', 15)) for a in range(0, 3)] for b in range(0, 3) ] for c in range(0, 2)
+    ]
 
-label_values = [
-   [ [Label(text='0', font=('Arial', 15)) for a in range(0, 3)] for b in range(0, 3) ] for c in range(0, 2)
-]
+    for i in range(0, 2) :
+        for j in range(0, 3) :
+            for k in range(0, 3) :
+                label_values[i][j][k].place(x=570+(k*30)+(i*120), y=180+(j*30), anchor='center')
 
-for i in range(0, 2) :
-    for j in range(0, 3) :
-        for k in range(0, 3) :
-            label_values[i][j][k].place(x=570+(k*30)+(i*120), y=180+(j*30), anchor='center')
-
-root.mainloop()
+    root.mainloop()

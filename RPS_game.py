@@ -105,61 +105,62 @@ def scissors() :
     RSP(0)
 
 
-#Gui
-root = Tk()
-root.title("Rock Paper Scissors Game")
-root.geometry("800x500+400+200")
+if __name__ == '__main__' :
+    #Gui
+    root = Tk()
+    root.title("Rock Paper Scissors Game")
+    root.geometry("800x500+400+200")
 
-# Title Text
-label_title = Label(root, text = 'Rock Paper Scissors Game', width=50, height=1, font=('Arial', 35))
-label_title.pack()
+    # Title Text
+    label_title = Label(root, text = 'Rock Paper Scissors Game', width=50, height=1, font=('Arial', 35))
+    label_title.pack()
 
-# label1
-label_winrate = Label(root, text = 'Player win : 0 / Computer win : 0 / Win Rate : 0.00%', font=('Arial', 15))
-label_winrate.pack(pady=20)
+    # label1
+    label_winrate = Label(root, text = 'Player win : 0 / Computer win : 0 / Win Rate : 0.00%', font=('Arial', 15))
+    label_winrate.pack(pady=20)
 
-# Label2
-label_select = Label(root, text='Player : -, Computer : -', font=('Arial',15))
-label_select.pack(pady=20)
+    # Label2
+    label_select = Label(root, text='Player : -, Computer : -', font=('Arial',15))
+    label_select.pack(pady=20)
 
-# Label3
-label_result = Label(root, text='Result : --', font=('Arial', 30, 'bold'))
-label_result.pack(pady=10)
+    # Label3
+    label_result = Label(root, text='Result : --', font=('Arial', 30, 'bold'))
+    label_result.pack(pady=10)
 
-# 가위바위보 버튼
-photo_rock = PhotoImage(file='rock.png')
-btn_rock = Button(root, image = photo_rock, width=150, height=150, command=rock)            # 바위
-btn_rock.place(x=160, y=380, anchor='center')
+    # 가위바위보 버튼
+    photo_rock = PhotoImage(file='rock.png')
+    btn_rock = Button(root, image = photo_rock, width=150, height=150, command=rock)            # 바위
+    btn_rock.place(x=160, y=380, anchor='center')
 
-photo_paper = PhotoImage(file='paper.png')
-btn_paper = Button(root, image = photo_paper, width=150, height=150, command=paper)           # 보
-btn_paper.place(x=400, y=380, anchor='center')
+    photo_paper = PhotoImage(file='paper.png')
+    btn_paper = Button(root, image = photo_paper, width=150, height=150, command=paper)           # 보
+    btn_paper.place(x=400, y=380, anchor='center')
 
-photo_scissors = PhotoImage(file='scissors.png')
-btn_scissors = Button(root, image = photo_scissors, width=150, height=150, command=scissors)     # 가위
-btn_scissors.place(x=640, y=380, anchor='center')
+    photo_scissors = PhotoImage(file='scissors.png')
+    btn_scissors = Button(root, image = photo_scissors, width=150, height=150, command=scissors)     # 가위
+    btn_scissors.place(x=640, y=380, anchor='center')
 
-# Values 행렬 나타내는 Label
-matrix11 = Label(text='0', font=('Arial', 15))
-matrix11.place(x=600, y=160, anchor='center')
-matrix12 = Label(text='0', font=('Arial', 15))
-matrix12.place(x=650, y=160, anchor='center')
-matrix13 = Label(text='0', font=('Arial', 15))
-matrix13.place(x=700, y=160, anchor='center')
+    # Values 행렬 나타내는 Label
+    matrix11 = Label(text='0', font=('Arial', 15))
+    matrix11.place(x=600, y=160, anchor='center')
+    matrix12 = Label(text='0', font=('Arial', 15))
+    matrix12.place(x=650, y=160, anchor='center')
+    matrix13 = Label(text='0', font=('Arial', 15))
+    matrix13.place(x=700, y=160, anchor='center')
 
-matrix21 = Label(text='0', font=('Arial', 15))
-matrix21.place(x=600, y=200, anchor='center')
-matrix22 = Label(text='0', font=('Arial', 15))
-matrix22.place(x=650, y=200, anchor='center')
-matrix23 = Label(text='0', font=('Arial', 15))
-matrix23.place(x=700, y=200, anchor='center')
+    matrix21 = Label(text='0', font=('Arial', 15))
+    matrix21.place(x=600, y=200, anchor='center')
+    matrix22 = Label(text='0', font=('Arial', 15))
+    matrix22.place(x=650, y=200, anchor='center')
+    matrix23 = Label(text='0', font=('Arial', 15))
+    matrix23.place(x=700, y=200, anchor='center')
 
-matrix31 = Label(text='0', font=('Arial', 15))
-matrix31.place(x=600, y=240, anchor='center')
-matrix32 = Label(text='0', font=('Arial', 15))
-matrix32.place(x=650, y=240, anchor='center')
-matrix33 = Label(text='0', font=('Arial', 15))
-matrix33.place(x=700, y=240, anchor='center')
+    matrix31 = Label(text='0', font=('Arial', 15))
+    matrix31.place(x=600, y=240, anchor='center')
+    matrix32 = Label(text='0', font=('Arial', 15))
+    matrix32.place(x=650, y=240, anchor='center')
+    matrix33 = Label(text='0', font=('Arial', 15))
+    matrix33.place(x=700, y=240, anchor='center')
 
 
-root.mainloop()
+    root.mainloop()
