@@ -19,6 +19,7 @@ test_result1 = []
 test_result2 = []
 test_result3 = []
 
+# 알고리즘1 테스트 (RPS_game.py)
 for i in range(0, 10) :
     for j in range(0, 50) :
         rps1.RSP(test_data[i][j])
@@ -26,6 +27,7 @@ for i in range(0, 10) :
 print(test_result1)
 print()
 
+# 알고리즘2 테스트 (RPS_game2_py)
 for i in range(0, 10) :
     for j in range(0, 50) :
         rps2.RSP(test_data[i][j])
@@ -33,6 +35,7 @@ for i in range(0, 10) :
 print(test_result2)
 print()
 
+# 알고리즘3 테스트 (RPS_game_3.py)
 for i in range(0, 10) :
     for j in range(0, 50) :
         rps3.RSP(test_data[i][j])
